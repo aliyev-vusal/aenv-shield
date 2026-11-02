@@ -117,8 +117,11 @@ test('settings helpers', () => {
   assert.equal(siteOf('chrome://extensions'), null);
   assert.equal(siteOf('not a url'), null);
   const rules = pauseRules(['a.com', 'a.com', 'b.com']);
-  assert.equal(rules.length, 2);
-  assert.ok(rules.every((r) => r.id >= 1000 && r.action.type === 'allowAllRequests'));
+  assert.equal(rules.length, 4, 'two rules per unique site');
+  assert.equal(new Set(rules.map((r) => r.id)).size, 4, 'unique ids');
+  assert.ok(rules.every((r) => r.id >= 1000 && r.priority > 1));
+  assert.deepEqual(rules.map((r) => r.action.type), ['allowAllRequests', 'allow', 'allowAllRequests', 'allow']);
+  assert.deepEqual(rules[1].condition.initiatorDomains, ['a.com']);
 });
 
 test('i18n: every key has 5 non-empty translations with matching placeholders', () => {

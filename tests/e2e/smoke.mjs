@@ -158,13 +158,23 @@ try {
 
   await step('pause ad blocker on a site', async () => {
     await call('togglePause', { site: 'paused.test' });
-    await new Promise((r) => setTimeout(r, 500)); // let the network service pick up the new rule
     const tab = await browser.newPage();
-    await tab.goto('http://paused.test/page', { waitUntil: 'networkidle0' });
-    const loaded = await tab.evaluate(() => window.loaded || []);
+    let loaded = [];
+    // Like a user pressing reload: rule updates reach the network service asynchronously.
+    for (let i = 0; i < 6 && !loaded.includes('http://doubleclick.net/ad.js'); i++) {
+      await tab.goto('http://paused.test/page?' + i, { waitUntil: 'networkidle0' });
+      loaded = await tab.evaluate(() => window.loaded || []);
+      if (!loaded.includes('http://doubleclick.net/ad.js')) await new Promise((r) => setTimeout(r, 500));
+    }
     assert.ok(loaded.includes('http://doubleclick.net/ad.js'), 'ads allowed while paused');
+    const display = await tab.evaluate(() => getComputedStyle(document.getElementById('slot')).display);
+    assert.notEqual(display, 'none', 'cosmetic hiding off while paused');
     await tab.close();
     await call('togglePause', { site: 'paused.test' });
+    const t2 = await browser.newPage();
+    await t2.goto('http://other.test/page', { waitUntil: 'networkidle0' });
+    assert.deepEqual(await t2.evaluate(() => window.loaded || []), ['http://cdn.example-ok.test/ok.js'], 'other sites still blocked');
+    await t2.close();
   });
 
   await step('ad blocker off lets ads through', async () => {

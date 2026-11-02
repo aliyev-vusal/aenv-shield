@@ -41,12 +41,27 @@ export function siteOf(url) {
   }
 }
 
-/** Dynamic DNR rules that switch the ad blocker off for paused sites. */
+/** Dynamic DNR rules that switch the ad blocker off for paused sites (two rules per site):
+ *  allowAllRequests covers frames opened on the site; the initiator-based allow rule covers every
+ *  subresource the site requests, independent of when the frame was committed. */
+export const SUBRESOURCE_TYPES = [
+  'sub_frame', 'stylesheet', 'script', 'image', 'font', 'object',
+  'xmlhttprequest', 'ping', 'media', 'websocket', 'other',
+];
+
 export function pauseRules(sites) {
-  return [...new Set(sites)].slice(0, 500).map((site, i) => ({
-    id: 1000 + i,
-    priority: 100,
-    action: { type: 'allowAllRequests' },
-    condition: { requestDomains: [site], resourceTypes: ['main_frame', 'sub_frame'] },
-  }));
+  return [...new Set(sites)].slice(0, 500).flatMap((site, i) => [
+    {
+      id: 1000 + 2 * i,
+      priority: 100,
+      action: { type: 'allowAllRequests' },
+      condition: { requestDomains: [site], resourceTypes: ['main_frame', 'sub_frame'] },
+    },
+    {
+      id: 1001 + 2 * i,
+      priority: 100,
+      action: { type: 'allow' },
+      condition: { initiatorDomains: [site], resourceTypes: SUBRESOURCE_TYPES },
+    },
+  ]);
 }

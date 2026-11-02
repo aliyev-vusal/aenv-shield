@@ -1,0 +1,8 @@
+{
+  "appName": {
+    "message": "AENV Shield — Proxy privado y bloqueador"
+  },
+  "appDesc": {
+    "message": "Enruta tu navegador por tu propio servidor (p. ej. en Bakú) y navega en privado, sin anuncios, rastreadores ni fugas WebRTC."
+  }
+}

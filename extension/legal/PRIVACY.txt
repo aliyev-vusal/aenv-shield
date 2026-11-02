@@ -1,0 +1,28 @@
+AENV Shield — Privacy Policy
+Last updated: 2 November 2026
+
+AENV Shield does not collect, sell or transmit personal data to the author.
+There is no account, no analytics and no telemetry.
+
+What is stored, and where
+- Your server list (host, port, protocol, optional username and password), your
+  settings, bypass list and paused sites are stored only in your browser
+  (chrome.storage.local). They are never synced or sent to the author.
+
+Network connections made by the extension
+- Your browser traffic is sent to the proxy server(s) YOU add. The operator of that
+  server (normally you) can see which sites you connect to.
+- IP check (optional, on by default, can be switched off in Settings): after
+  connecting, one request is sent to https://ipwho.is/ to show your visible IP and
+  country. ipwho.is is a third party with its own privacy policy.
+- The ad blocker works entirely offline with built-in rules.
+
+Permissions
+- proxy, webRequest, webRequestAuthProvider: route traffic to your server and answer
+  its password prompt.
+- privacy: stop WebRTC from revealing your real IP address.
+- declarativeNetRequest, activeTab, host access: block ad/tracker requests, count
+  blocked requests on the current tab, and hide empty ad slots.
+- storage: keep your settings in your browser.
+
+Contact: vusal.aliyev2@outlook.com

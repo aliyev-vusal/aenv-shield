@@ -1,0 +1,52 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_appName__",
+  "short_name": "AENV Shield",
+  "description": "__MSG_appDesc__",
+  "version": "1.0.0",
+  "author": "Vusal Aliyev",
+  "default_locale": "en",
+  "minimum_chrome_version": "110",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "AENV Shield",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "proxy",
+    "storage",
+    "webRequest",
+    "webRequestAuthProvider",
+    "privacy",
+    "declarativeNetRequest",
+    "activeTab"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "declarative_net_request": {
+    "rule_resources": [
+      { "id": "ads", "enabled": true, "path": "rules/ads.json" }
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["cosmetic.js"],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ]
+}

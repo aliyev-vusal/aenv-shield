@@ -1,0 +1,19 @@
+{
+  "name": "aenv-shield",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AENV Shield: private proxy client and ad blocker for Chromium browsers.",
+  "author": "Vusal Aliyev",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "e2e": "node tests/e2e/smoke.mjs",
+    "rules": "python3 tools/build_rules.py",
+    "icons": "python3 tools/make_icons.py",
+    "pack": "node tools/pack.mjs"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^23.11.1"
+  }
+}

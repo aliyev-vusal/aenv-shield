@@ -1,0 +1,19 @@
+AENV Shield — End User License Agreement
+Copyright (c) 2026 Vusal Aliyev. All rights reserved.
+
+1. Grant. You may install and use AENV Shield free of charge for personal and
+   commercial purposes.
+2. Restrictions. You may not sell, sublicense or redistribute modified copies of
+   AENV Shield under its name or icon without written permission.
+3. Your servers. AENV Shield is a client only. It does not provide, sell or operate
+   any VPN or proxy service. It routes browser traffic exclusively to servers you
+   configure yourself. You are responsible for those servers and for complying
+   with the laws of every country involved and with the terms of the websites
+   you visit.
+4. No warranty. The software is provided "as is", without warranty of any kind.
+   A browser extension only protects traffic of this browser profile; other apps
+   on your device are not affected.
+5. Limitation of liability. To the maximum extent permitted by law, the author is
+   not liable for any damages arising from the use of the software.
+6. Governing law. German law applies; mandatory consumer protection rules of your
+   country of residence remain unaffected.

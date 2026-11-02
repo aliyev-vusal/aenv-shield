@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - name: Ruleset is in sync with domains.txt
+        run: |
+          python3 tools/build_rules.py
+          git diff --exit-code extension/rules/ads.json
+      - name: Unit + consistency tests
+        run: npm test
+      - name: Server script lint
+        run: |
+          sudo apt-get install -y shellcheck
+          shellcheck -S warning server/install.sh
+      - name: Install Chrome
+        id: chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+      - name: End-to-end test in real Chrome
+        env:
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+        run: xvfb-run -a npm run e2e
+
+  package:
+    needs: test
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm run pack
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aenv-shield-extension
+          path: dist/*.zip
+      - name: GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.zip

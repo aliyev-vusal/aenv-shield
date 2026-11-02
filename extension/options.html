@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AENV Shield</title>
+  <link rel="stylesheet" href="ui.css">
+</head>
+<body class="options">
+  <div class="page">
+    <header class="bar" style="border:0;padding:0">
+      <h1><img src="icons/icon48.png" alt="" width="34" height="34"> AENV Shield</h1>
+      <label class="lang" data-i18n-title="language">
+        <span aria-hidden="true">🌐</span>
+        <select id="lang"></select>
+      </label>
+    </header>
+
+    <section class="card">
+      <h2 data-i18n="servers"></h2>
+      <ul class="server-list" id="serverList"></ul>
+      <button id="newServer" class="btn" data-i18n="addServer"></button>
+
+      <form id="serverForm" hidden>
+        <div class="grid" style="margin-top:14px">
+          <label><span data-i18n="name"></span><input class="input" name="name" required maxlength="60" placeholder="Baku #1"></label>
+          <label><span data-i18n="country"></span><select class="input" name="country" id="countrySelect"></select></label>
+          <label class="full"><span data-i18n="host"></span><input class="input" name="host" required placeholder="1-2-3-4.sslip.io" autocomplete="off" spellcheck="false"></label>
+          <label><span data-i18n="port"></span><input class="input" name="port" type="number" min="1" max="65535" value="443" required></label>
+          <label><span data-i18n="protocol"></span>
+            <select class="input" name="scheme">
+              <option value="HTTPS">HTTPS</option>
+              <option value="PROXY">HTTP</option>
+              <option value="SOCKS5">SOCKS5</option>
+            </select>
+          </label>
+          <p class="hint full" data-i18n="protocolHint"></p>
+          <label><span data-i18n="username"></span><input class="input" name="username" autocomplete="off"></label>
+          <label><span data-i18n="password"></span><input class="input" name="password" type="password" autocomplete="new-password"></label>
+        </div>
+        <div class="error-text" id="formError" role="alert"></div>
+        <div class="row">
+          <button type="submit" class="btn-primary" data-i18n="save"></button>
+          <button type="button" class="btn" id="cancelForm" data-i18n="cancel"></button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="importToken"></h2>
+      <textarea id="token" class="input" rows="3" spellcheck="false" placeholder="aenv-shield:eyJuYW1lIjoi…"></textarea>
+      <p class="hint" data-i18n="importHint"></p>
+      <div class="error-text" id="tokenError" role="alert"></div>
+      <div class="row"><button id="importBtn" class="btn-primary" data-i18n="import"></button></div>
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="bypassList"></h2>
+      <textarea id="bypass" class="input" rows="5" spellcheck="false" placeholder="mybank.de&#10;*.sparkasse.de"></textarea>
+      <p class="hint" data-i18n="bypassHint"></p>
+      <div class="row"><button id="saveBypass" class="btn-primary" data-i18n="save"></button></div>
+    </section>
+
+    <section class="card toggles">
+      <h2 data-i18n="general" style="margin-top:8px"></h2>
+      <div class="toggle-row">
+        <div class="t-title" data-i18n="autoConnect"></div>
+        <label class="switch"><input type="checkbox" id="autoConnect"><span></span><b class="sr" data-i18n="autoConnect"></b></label>
+      </div>
+      <div class="toggle-row">
+        <div>
+          <div class="t-title" data-i18n="ipCheck"></div>
+          <div class="t-desc" data-i18n="ipCheckDesc"></div>
+        </div>
+        <label class="switch"><input type="checkbox" id="ipCheck"><span></span><b class="sr" data-i18n="ipCheck"></b></label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="serverSetup"></h2>
+      <p class="hint" data-i18n="serverSetupBody" style="font-size:14px"></p>
+      <p><a href="https://github.com/aliyev-vusal/aenv-shield/tree/main/server" target="_blank" rel="noopener" style="color:var(--accent)">github.com/aliyev-vusal/aenv-shield/server</a></p>
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="about"></h2>
+      <p id="version"></p>
+      <p class="hint" data-i18n="disclaimer" style="font-size:13px"></p>
+      <div class="row">
+        <a class="btn" href="legal/PRIVACY.txt" target="_blank" data-i18n="privacy"></a>
+        <a class="btn" href="legal/LICENSE.txt" target="_blank" data-i18n="license"></a>
+      </div>
+      <p class="hint">© 2026 Vusal Aliyev</p>
+    </section>
+  </div>
+  <script type="module" src="options.js"></script>
+</body>
+</html>

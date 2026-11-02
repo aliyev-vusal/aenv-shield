@@ -14,6 +14,6 @@
     "pack": "node tools/pack.mjs"
   },
   "devDependencies": {
-    "puppeteer-core": "^23.11.1"
+    "puppeteer-core": "^24.43.1"
   }
 }

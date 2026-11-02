@@ -34,8 +34,10 @@ const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'aenv-art-'));
 const browser = await puppeteer.launch({
   executablePath: process.env.CHROME_PATH || 'google-chrome',
   headless: true,
+  pipe: true,
+  enableExtensions: [EXT],
   userDataDir: profile,
-  args: [`--disable-extensions-except=${EXT}`, `--load-extension=${EXT}`, '--disable-features=DisableLoadExtensionCommandLineSwitch', '--no-sandbox', '--no-first-run', '--font-render-hinting=none'],
+  args: ['--no-sandbox', '--no-first-run', '--font-render-hinting=none'],
 });
 
 const sw = await (await browser.waitForTarget((t) => t.type() === 'service_worker' && t.url().endsWith('background.js'))).worker();

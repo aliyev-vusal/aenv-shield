@@ -66,12 +66,11 @@ for (const k of ['HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy', 'ALL_
 const browser = await puppeteer.launch({
   executablePath: CHROME,
   headless: true,
+  pipe: true,
+  enableExtensions: [EXT],
   env,
   userDataDir: profile,
   args: [
-    `--disable-extensions-except=${EXT}`,
-    `--load-extension=${EXT}`,
-    '--disable-features=DisableLoadExtensionCommandLineSwitch',
     '--no-sandbox',
     '--no-first-run',
     // Make every test hostname resolve locally so DIRECT (bypass) requests are distinguishable.
@@ -159,6 +158,7 @@ try {
 
   await step('pause ad blocker on a site', async () => {
     await call('togglePause', { site: 'paused.test' });
+    await new Promise((r) => setTimeout(r, 500)); // let the network service pick up the new rule
     const tab = await browser.newPage();
     await tab.goto('http://paused.test/page', { waitUntil: 'networkidle0' });
     const loaded = await tab.evaluate(() => window.loaded || []);
